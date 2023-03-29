@@ -1,0 +1,1 @@
+cmd_/root/lc_work/nvme/leapioNVME.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /root/lc_work/nvme/leapioNVME.ko /root/lc_work/nvme/leapioNVME.o /root/lc_work/nvme/leapioNVME.mod.o;  true
