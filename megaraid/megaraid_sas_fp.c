@@ -973,7 +973,6 @@ MR_BuildRaidContext(struct megasas_instance *instance,
 		    struct RAID_CONTEXT *pRAID_Context,
 		    struct MR_DRV_RAID_MAP_ALL *map, u8 **raidLUN)
 {
-	printk("--------------@@@@@@@@    come where   @@@@@@@@------------------\n");
 	struct fusion_context *fusion;
 	struct MR_LD_RAID  *raid;
 	u32         stripSize, stripe_mask;
@@ -1166,7 +1165,6 @@ MR_BuildRaidContext(struct megasas_instance *instance,
 	pRAID_Context->config_seq_num	= raid->seqNum;
 	/* save pointer to raid->LUN array */
 	*raidLUN = raid->LUN;
-
 	/* Aero R5/6 Division Offload for WRITE */
 	if (fusion->r56_div_offload && (raid->level >= 5) && !isRead) {
 		mr_get_phy_params_r56_rmw(instance, ld, start_strip, io_info,
@@ -1174,7 +1172,6 @@ MR_BuildRaidContext(struct megasas_instance *instance,
 				       map);
 		return true;
 	}
-
 	/*Get Phy Params only if FP capable, or else leave it to MR firmware
 	  to do the calculation.*/
 	if (io_info->fpOkForIo) {

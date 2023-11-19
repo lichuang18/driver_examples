@@ -1852,7 +1852,6 @@ megasas_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scmd)
 		scmd->result = DID_OK << 16;
 		goto out_done;
 	}
-
 	return instance->instancet->build_and_issue_cmd(instance, scmd);
 
  out_done:

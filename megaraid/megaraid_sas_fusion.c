@@ -320,6 +320,7 @@ static void
 megasas_fire_cmd_fusion(struct megasas_instance *instance,
 		union MEGASAS_REQUEST_DESCRIPTOR_UNION *req_desc)
 {
+	printk("--------------@@@@@@@@    issue to FW   @@@@@@@@------------------\n");
 	if (instance->atomic_desc_support)
 		writel(le32_to_cpu(req_desc->u.low),
 			&instance->reg_set->inbound_single_queue_port);
@@ -2740,9 +2741,7 @@ megasas_build_ldio_fusion(struct megasas_instance *instance,
 	struct RAID_CONTEXT_G35 *rctx_g35;
 
 	device_id = MEGASAS_DEV_INDEX(scp);
-	printk("--------------@@@@@    before [%d]   @@@@@------------------\n",fusion->fast_path_io);
 	fusion = instance->ctrl_context;
-	printk("--------------@@@@@    after [%d]   @@@@@------------------\n",fusion->fast_path_io);
 	io_request = cmd->io_request;
 	rctx = &io_request->RaidContext.raid_context;
 	rctx_g35 = &io_request->RaidContext.raid_context_g35;
@@ -3223,15 +3222,14 @@ megasas_build_io_fusion(struct megasas_instance *instance,
 	 * This will be modified for FP in build_ldio_fusion
 	 */
 	io_request->IoFlags = cpu_to_le16(scp->cmd_len);
-
 	switch (megasas_cmd_type(scp)) {
-	case READ_WRITE_LDIO:
-		megasas_build_ldio_fusion(instance, scp, cmd);
+	case READ_WRITE_LDIO:           //组RAID，读写走这个分支
+		megasas_build_ldio_fusion(instance, scp, cmd);  
 		break;
 	case NON_READ_WRITE_LDIO:
 		megasas_build_ld_nonrw_fusion(instance, scp, cmd);
 		break;
-	case READ_WRITE_SYSPDIO:
+	case READ_WRITE_SYSPDIO:        //JBOD模式，读写走这个分支
 		megasas_build_syspd_fusion(instance, scp, cmd, true);
 		break;
 	case NON_READ_WRITE_SYSPDIO:
@@ -3391,7 +3389,6 @@ megasas_build_and_issue_cmd_fusion(struct megasas_instance *instance,
 
 	req_desc->Words = 0;
 	cmd->request_desc = req_desc;
-
 	if (megasas_build_io_fusion(instance, scmd, cmd)) {
 		megasas_return_cmd_fusion(instance, cmd);
 		dev_err(&instance->pdev->dev, "Error building command\n");
