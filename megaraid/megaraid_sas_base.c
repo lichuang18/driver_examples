@@ -1788,7 +1788,6 @@ megasas_queue_command(struct Scsi_Host *shost, struct scsi_cmnd *scmd)
 	struct megasas_instance *instance;
 	struct MR_PRIV_DEVICE *mr_device_priv_data;
 	u32 ld_tgt_id;
-
 	instance = (struct megasas_instance *)
 	    scmd->device->host->hostdata;
 
@@ -6049,7 +6048,7 @@ static int megasas_init_fw(struct megasas_instance *instance)
 		   instance->bar, base_addr_phys, instance->reg_set);
 
 	if (instance->adapter_type != MFI_SERIES)
-		instance->instancet = &megasas_instance_template_fusion;
+		instance->instancet = &megasas_instance_template_fusion; //博通的93 94 95基本都是走的这个分支
 	else {
 		switch (instance->pdev->device) {
 		case PCI_DEVICE_ID_LSI_SAS1078R:
@@ -7057,7 +7056,7 @@ static inline void megasas_set_adapter_type(struct megasas_instance *instance)
 		instance->adapter_type = MFI_SERIES;
 	} else {
 		switch (instance->pdev->device) {
-		case PCI_DEVICE_ID_LSI_AERO_10E1:
+		case PCI_DEVICE_ID_LSI_AERO_10E1: //95xx  系列
 		case PCI_DEVICE_ID_LSI_AERO_10E2:
 		case PCI_DEVICE_ID_LSI_AERO_10E5:
 		case PCI_DEVICE_ID_LSI_AERO_10E6:
@@ -7065,8 +7064,8 @@ static inline void megasas_set_adapter_type(struct megasas_instance *instance)
 			break;
 		case PCI_DEVICE_ID_LSI_VENTURA:
 		case PCI_DEVICE_ID_LSI_CRUSADER:
-		case PCI_DEVICE_ID_LSI_HARPOON:
-		case PCI_DEVICE_ID_LSI_TOMCAT:
+		case PCI_DEVICE_ID_LSI_HARPOON:    //9460-8i
+		case PCI_DEVICE_ID_LSI_TOMCAT:     //9440-8i
 		case PCI_DEVICE_ID_LSI_VENTURA_4PORT:
 		case PCI_DEVICE_ID_LSI_CRUSADER_4PORT:
 			instance->adapter_type = VENTURA_SERIES;
@@ -7075,12 +7074,12 @@ static inline void megasas_set_adapter_type(struct megasas_instance *instance)
 		case PCI_DEVICE_ID_LSI_PLASMA:
 			instance->adapter_type = THUNDERBOLT_SERIES;
 			break;
-		case PCI_DEVICE_ID_LSI_INVADER:
+		case PCI_DEVICE_ID_LSI_INVADER:     //3108
 		case PCI_DEVICE_ID_LSI_INTRUDER:
 		case PCI_DEVICE_ID_LSI_INTRUDER_24:
 		case PCI_DEVICE_ID_LSI_CUTLASS_52:
 		case PCI_DEVICE_ID_LSI_CUTLASS_53:
-		case PCI_DEVICE_ID_LSI_FURY:
+		case PCI_DEVICE_ID_LSI_FURY:        //3008   
 			instance->adapter_type = INVADER_SERIES;
 			break;
 		default: /* For all other supported controllers */
@@ -7124,7 +7123,6 @@ static int megasas_alloc_ctrl_mem(struct megasas_instance *instance)
 				      GFP_KERNEL);
 	if (!instance->reply_map)
 		return -ENOMEM;
-	printk("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  megaraid c come here @@@@@@@@@@@@@@@@@@@@@@@@@@@ %d\n",instance->adapter_type);
 	switch (instance->adapter_type) {
 	case MFI_SERIES:
 		if (megasas_alloc_mfi_ctrl_mem(instance))
@@ -7440,7 +7438,7 @@ static int megasas_probe_one(struct pci_dev *pdev,
 	struct Scsi_Host *host;
 	struct megasas_instance *instance;
 	u16 control = 0;
-
+	printk("f u c s t a r t p r o b e!!!!0x%x\n",pdev->device);
 	switch (pdev->device) {
 	case PCI_DEVICE_ID_LSI_AERO_10E0:
 	case PCI_DEVICE_ID_LSI_AERO_10E3:
@@ -7453,7 +7451,6 @@ static int megasas_probe_one(struct pci_dev *pdev,
 		dev_info(&pdev->dev, "Adapter is in configurable secure mode\n");
 		break;
 	}
-
 	/* Reset MSI-X in the kdump kernel */
 	if (reset_devices) {
 		pos = pci_find_capability(pdev, PCI_CAP_ID_MSIX);
@@ -8966,7 +8963,7 @@ megasas_aen_polling(struct work_struct *work)
 static int __init megasas_init(void)
 {
 	int rval;
-
+	printk("f u c s t a r t!!!!\n");
 	/*
 	 * Booted in kdump kernel, minimize memory footprints by
 	 * disabling few features
@@ -8982,7 +8979,6 @@ static int __init megasas_init(void)
 	 * Announce driver version and other information
 	 */
 	pr_info("megasas: %s\n", MEGASAS_VERSION);
-
 	megasas_dbg_lvl = 0;
 	support_poll_for_event = 2;
 	support_device_change = 1;

@@ -1,1 +1,1 @@
-cmd_/root/workspace/megaraid/leapraid.o := ld -m elf_x86_64 -z noexecstack   -r -o /root/workspace/megaraid/leapraid.o @/root/workspace/megaraid/leapraid.mod 
+cmd_/root/workspace/driver_examples/megaraid/leapraid.o := ld -m elf_x86_64 -z noexecstack   -r -o /root/workspace/driver_examples/megaraid/leapraid.o @/root/workspace/driver_examples/megaraid/leapraid.mod 

@@ -1,6 +1,6 @@
 [global]
 name=fio-seq-reads
-iodepth=4
+iodepth=16
 rw=randwrite
 ioengine=libaio
 bs=4k
@@ -9,7 +9,9 @@ time_based
 group_reporting
 thread
 runtime=30
-numjobs=4
+numjobs=64
+norandommap
 
 [file1]
 filename=/dev/sda
+

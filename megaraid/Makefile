@@ -22,6 +22,7 @@ init:
 	sudo rmmod megaraid_sas
 
 install:
+#	sudo rmmod leapraid
 	sudo insmod leapraid.ko
 
 uninstall:

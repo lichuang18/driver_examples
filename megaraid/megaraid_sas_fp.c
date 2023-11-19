@@ -905,7 +905,6 @@ static void mr_get_phy_params_r56_rmw(struct megasas_instance *instance,
 			    struct RAID_CONTEXT_G35 *pRAID_Context,
 			    struct MR_DRV_RAID_MAP_ALL *map)
 {
-	printk("-----------------start caculate!-----------------------");
 	struct MR_LD_RAID  *raid = MR_LdRaidGet(ld, map);
 	u8          span, dataArms, arms, dataArm, logArm;
 	s8          rightmostParityArm, PParityArm;
@@ -974,6 +973,7 @@ MR_BuildRaidContext(struct megasas_instance *instance,
 		    struct RAID_CONTEXT *pRAID_Context,
 		    struct MR_DRV_RAID_MAP_ALL *map, u8 **raidLUN)
 {
+	printk("--------------@@@@@@@@    come where   @@@@@@@@------------------\n");
 	struct fusion_context *fusion;
 	struct MR_LD_RAID  *raid;
 	u32         stripSize, stripe_mask;

@@ -81,7 +81,6 @@ __used __section("__versions") = {
 	{ 0x5921a19f, "pci_read_config_dword" },
 	{ 0x65487097, "__x86_indirect_thunk_rax" },
 	{ 0x792ff6e9, "blk_mq_pci_map_queues" },
-	{ 0x6b2dc060, "dump_stack" },
 	{ 0x122c3a7e, "_printk" },
 	{ 0x6a135d90, "scsi_device_lookup" },
 	{ 0x8ddd8aad, "schedule_timeout" },
@@ -231,4 +230,4 @@ MODULE_ALIAS("pci:v00001000d000010E3sv*sd*bc*sc*i*");
 MODULE_ALIAS("pci:v00001000d000010E4sv*sd*bc*sc*i*");
 MODULE_ALIAS("pci:v00001000d000010E7sv*sd*bc*sc*i*");
 
-MODULE_INFO(srcversion, "A080E7FF92A7D5D65BC356A");
+MODULE_INFO(srcversion, "4AFF9DE4FD7DD2ACF6C5E04");

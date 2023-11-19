@@ -1792,8 +1792,6 @@ static inline void megasas_free_ioc_init_cmd(struct megasas_instance *instance)
 static u32
 megasas_init_adapter_fusion(struct megasas_instance *instance) //命令队列分配
 {
-	dump_stack();
-	printk("！！！！！！！！！！！9440-8i you come here: megasas_init_adapter_fusion 命令队列分配位置 ！！！！！！！！！！\n");
 	struct fusion_context *fusion;
 	u32 scratch_pad_1;
 	int i = 0, count;
@@ -2742,9 +2740,9 @@ megasas_build_ldio_fusion(struct megasas_instance *instance,
 	struct RAID_CONTEXT_G35 *rctx_g35;
 
 	device_id = MEGASAS_DEV_INDEX(scp);
-
+	printk("--------------@@@@@    before [%d]   @@@@@------------------\n",fusion->fast_path_io);
 	fusion = instance->ctrl_context;
-
+	printk("--------------@@@@@    after [%d]   @@@@@------------------\n",fusion->fast_path_io);
 	io_request = cmd->io_request;
 	rctx = &io_request->RaidContext.raid_context;
 	rctx_g35 = &io_request->RaidContext.raid_context_g35;
@@ -2824,7 +2822,7 @@ megasas_build_ldio_fusion(struct megasas_instance *instance,
 
 	if (ld < instance->fw_supported_vd_count)
 		raid = MR_LdRaidGet(ld, local_map_ptr);
-
+	
 	if (!raid || (!fusion->fast_path_io)) {
 		rctx->reg_lock_flags  = 0;
 		fp_possible = false;
@@ -5288,8 +5286,6 @@ void megasas_fusion_ocr_wq(struct work_struct *work)
 int
 megasas_alloc_fusion_context(struct megasas_instance *instance)
 {
-	//dump_stack();
-	printk("------------------- megasas_alloc_fusion_context -----------------\n");
 	struct fusion_context *fusion;
 
 	instance->ctrl_context = kzalloc(sizeof(struct fusion_context),
@@ -5302,7 +5298,6 @@ megasas_alloc_fusion_context(struct megasas_instance *instance)
 	fusion = instance->ctrl_context;
 	fusion->log_to_span_pages = get_order(MAX_LOGICAL_DRIVES_EXT *
 					      sizeof(LD_SPAN_INFO));
-	printk("--------fusion -> log_to_span_pages : %d--------\n",fusion->log_to_span_pages);
 	fusion->log_to_span =
 		(PLD_SPAN_INFO)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
 						fusion->log_to_span_pages);
@@ -5318,7 +5313,6 @@ megasas_alloc_fusion_context(struct megasas_instance *instance)
 	}
 	fusion->load_balance_info_pages = get_order(MAX_LOGICAL_DRIVES_EXT *
 		sizeof(struct LD_LOAD_BALANCE_INFO));
-	printk("--------fusion -> load_balance_info_pages : %d--------\n",fusion->load_balance_info_pages);
 	fusion->load_balance_info =
 		(struct LD_LOAD_BALANCE_INFO *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
 		fusion->load_balance_info_pages);

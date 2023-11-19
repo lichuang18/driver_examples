@@ -1,1 +1,1 @@
-cmd_/root/workspace/megaraid/leapraid.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /root/workspace/megaraid/leapraid.ko /root/workspace/megaraid/leapraid.o /root/workspace/megaraid/leapraid.mod.o;  true
+cmd_/root/workspace/driver_examples/megaraid/leapraid.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /root/workspace/driver_examples/megaraid/leapraid.ko /root/workspace/driver_examples/megaraid/leapraid.o /root/workspace/driver_examples/megaraid/leapraid.mod.o;  true
